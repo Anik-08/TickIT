@@ -1,13 +1,15 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "./app/api/auth/[...nextauth]/route"; // Adjust the path
+import { getToken } from "next-auth/jwt";
+import { NextResponse } from "next/server";
 
 export async function middleware(req) {
-  const session = await getServerSession(authOptions, { req });
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-  if (session) {
+  // If user has a valid session token, redirect to the dashboard
+  if (token) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
+  // Allow access to the register page if not authenticated
   return NextResponse.next();
 }
 

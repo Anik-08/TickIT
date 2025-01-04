@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 
 export default function Home() {
@@ -9,8 +10,8 @@ export default function Home() {
       {/* Content Wrapper */}
       <div className="z-10 text-center p-8">
         {/* Main Heading with Animation */}
-        <h1 className="text-5xl font-bold mb-6 animate-shrink-grow">
-          Welcome to <span className="text-blue-400">TAMANG</span>
+        <h1 className="text-5xl font-bold mb-6 animate-pulse">
+          Welcome to <span className="text-blue-400">TICKIT</span>
         </h1>
 
         {/* Subheading */}
@@ -51,7 +52,7 @@ export default function Home() {
         </a>
       </div>
       <footer className="absolute bottom-2 text-center ">
-        &copy; Copyright @ TAMANG 2024
+        &copy; Copyright @ TICKIT 2024
       </footer>
     </div>
   );

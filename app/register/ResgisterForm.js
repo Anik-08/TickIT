@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -63,7 +62,8 @@ export default function RegisterForm() {
         setEmail("");
         setPassword("");
         setConfirmPassword("");
-        router.push("/login");
+        setTimeout(() => router.push("/login"), 2000);
+        
       }
     } catch (err) {
       setError("Something went wrong. Please try again.");
@@ -76,7 +76,9 @@ export default function RegisterForm() {
     <div className="relative bg-black w-screen h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
         <h2 className="text-center text-2xl font-semibold mb-6">Register</h2>
-
+        <button className="border-2 border-green-400 hover:scale-110 my-2 p-1 rounded-md duration-500" onClick={()=> {
+          router.push("/")
+        }}>Go Back</button>
         <form className="space-y-4" method="POST" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">

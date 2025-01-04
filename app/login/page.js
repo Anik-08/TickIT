@@ -44,7 +44,9 @@ const Page = () => {
     <div className="relative bg-black w-screen h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
         <h2 className="text-center text-2xl font-semibold mb-6">Login</h2>
-
+        <button className="border-2 border-green-400 hover:scale-110 my-2 p-1 rounded-md duration-500" onClick={()=> {
+          router.push("/")
+        }}>Go Back</button>
         <form className="space-y-4" method='POST' onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
@@ -82,9 +84,9 @@ const Page = () => {
           {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
         </form>
 
-        <div className="mt-4 text-center">
+        {/* <div className="mt-4 text-center">
           <a href="#" className="text-sm text-blue-500 hover:underline">Forgot Password?</a>
-        </div>
+        </div> */}
 
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">

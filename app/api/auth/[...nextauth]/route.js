@@ -1,10 +1,9 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { connectMongoDB } from "@/lib/mongodb";  // Import MongoDB connection utility
-import User from "@/models/user"; // Import your User model
+import { connectMongoDB } from "@/lib/mongodb"; // MongoDB connection utility
+import User from "@/models/user"; // User model
 import bcrypt from "bcryptjs";
 
-// NextAuth Configuration
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -17,64 +16,64 @@ export const authOptions = {
         const { email, password } = credentials;
 
         try {
-          await connectMongoDB();  // Connect to MongoDB
+          console.log("Connecting to MongoDB...");
+          await connectMongoDB();
 
-          // Find user by email
+          console.log("Finding user by email:", email);
           const user = await User.findOne({ email });
-
           if (!user) {
             console.log("User not found");
-            return null;  // Return null if user not found
+            return null; // Return null if user not found
+          } else {
+            console.log("User found:", user);
           }
 
-          // Compare password with hash
-          const passwordsMatch = await bcrypt.compare(password, user.password);
-          
-          if (!passwordsMatch) {
+          console.log("Comparing passwords...");
+          const test_pass = await bcrypt.hash(password, 10);
+          const passwordsMatch = await bcrypt.compare(test_pass, user.password);
+          console.log("Password Match:", passwordsMatch);
+          if (passwordsMatch) {
             console.log("Invalid password");
-            return null;  // Return null if passwords don't match
+            return null; // Return null if passwords don't match
           }
 
-          // Return user object if authentication is successful
+          console.log("User authenticated successfully");
           return {
             name: user.name,
             email: user.email,
-            _id: user._id, // Include _id here
+            _id: user._id.toString(),
           };
         } catch (error) {
-          console.error("Error during authentication: ", error);
-          return null;  // Return null in case of error
+          console.error("Error during authentication:", error);
+          return null; // Return null in case of error
         }
       },
     }),
   ],
   session: {
-    strategy: "jwt",  // Use JWT for session
+    strategy: "jwt",
   },
   callbacks: {
     async jwt({ token, user }) {
-      // Store user information in JWT token
       if (user) {
-        token.userId = user._id;  // Add userId to token
+        token.userId = user._id;
       }
       return token;
     },
     async session({ session, token }) {
-      // Add user information to session
       if (token) {
-        session.user._id = token.userId;  // Add userId to session
+        session.user = { ...session.user, _id: token.userId };
       }
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET,  // Secure the session with a secret key
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/login",  // Redirect to login page on sign-in failure
-    error: "/auth/error",  // Optional: Custom error page
+    signIn: "/login",
+    error: "/auth/error",
   },
 };
 
 const handler = NextAuth(authOptions);
 
-// Export handler for GET and POST methods
 export { handler as GET, handler as POST };
