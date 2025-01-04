@@ -1,6 +1,6 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { useSession } from "next-auth/react"; // To get the logged-in user's session
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { useSession } from "next-auth/react";
 
 // Create a context
 const TaskContext = createContext();
@@ -11,8 +11,8 @@ export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]); // Initial state is an empty array for tasks
   const [completedTasks, setCompletedTasks] = useState([]); // Initial state for completed tasks
 
-  // Fetch tasks for the logged-in user
-  const fetchTasks = async () => {
+  // Memoize the fetchTasks function so it doesn't change on each render
+  const fetchTasks = useCallback(async () => {
     if (!session?.user?._id) {
       console.error("No user ID found in session.");
       return; // Return if user ID is not available
@@ -36,7 +36,7 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.log("Error fetching tasks:", error);
     }
-  };
+  }, [session?.user?._id]); // Only re-run the function if session user ID changes
 
   // Mark task as completed
   const markTaskAsCompleted = async (taskId) => {
@@ -58,10 +58,8 @@ export const TaskProvider = ({ children }) => {
 
   // Fetch tasks when session is available or session changes
   useEffect(() => {
-    if (session?.user?._id) {
-      fetchTasks();
-    }
-  }, [session?.user?._id]); // Trigger fetch when user session changes
+    fetchTasks();
+  }, [fetchTasks, session?.user?._id]); // Include session.user._id explicitly
 
   return (
     <TaskContext.Provider value={{ tasks, completedTasks, setTasks, setCompletedTasks, markTaskAsCompleted }}>

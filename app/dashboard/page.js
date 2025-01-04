@@ -130,13 +130,13 @@ const Page = () => {
 
       {/* Main Content Section */}
       <div className="lg:col-span-10 h-full flex flex-col gap-4">
-        <h2 className="text-3xl font-bold text-white">{session.user.name}'s Dashboard</h2>
+        <h2 className="text-3xl font-bold text-white">{session.user.name}&apos;s Dashboard</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* TODO Section */}
           <div className="col-span-2 bg-black rounded-xl p-4 shadow-lg flex flex-col">
             <div className="info flex justify-between items-center rounded-xl bg-[#F0BB78] bg-opacity-30 p-4 shadow-md border-white">
-              <h1 className="text-white font-bold text-xl">TODO's</h1>
+              <h1 className="text-white font-bold text-xl">TODO&apos;s</h1>
               <button
                 className="p-2 bg-slate-800 text-white rounded-xl hover:bg-slate-700 transition duration-300"
                 onClick={() => router.push("/dashboard/new-task")}
