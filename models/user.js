@@ -16,7 +16,7 @@ const userSchema = new Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true, collection: 'users' }
 );
 
 

@@ -78,7 +78,7 @@ export default function RegisterForm() {
         <h2 className="text-center text-2xl font-semibold mb-6">Register</h2>
         <button className="border-2 border-green-400 hover:scale-110 my-2 p-1 rounded-md duration-500" onClick={()=> {
           router.push("/")
-        }}>Go Back</button>
+        }}>Back to Home</button>
         <form className="space-y-4" method="POST" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
