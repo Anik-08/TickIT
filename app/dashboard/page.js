@@ -190,9 +190,9 @@ const Page = () => {
                             Mark as Done
                           </button>
                           {/* Priority Badge */}
-                          <div className="flex w-1/4">
+                          <div className="flex w-1/3 text-center">
                             <span
-                              className={`py-2 px-2 w-1/2 mt-2 text-center rounded-md text-white ${
+                              className={`py-2 px-auto w-1/2 mt-2 text-center rounded-md text-white ${
                                 task.priority === "high"
                                   ? "bg-red-600 border-red-500 border-2"
                                   : task.priority === "mid"
