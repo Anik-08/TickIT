@@ -14,7 +14,7 @@ export const TaskProvider = ({ children }) => {
   // Memoize the fetchTasks function so it doesn't change on each render
   const fetchTasks = useCallback(async () => {
     if (!session?.user?._id) {
-      console.error("No user ID found in session.");
+      console.log("No user ID found in session.");
       return; // Return if user ID is not available
     }
 
@@ -51,7 +51,7 @@ export const TaskProvider = ({ children }) => {
         // Optional: Sync the change with the backend
         await fetch(`/api/tasks/${taskId}/complete`, { method: "POST" });
       } catch (error) {
-        console.error("Error marking task as completed:", error);
+        console.log("Error marking task as completed:", error);
       }
     }
   };
