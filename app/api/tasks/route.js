@@ -42,7 +42,7 @@ export async function GET(req) {
     const tasks = await Task.find({ user: userId });  
     // console.log("Tasks associated with user: ", userId ," are:",tasks);
     if (!tasks || tasks.length === 0) {
-      return NextResponse.json({ message: "No tasks found." }, { status: 204 });
+      return NextResponse.json({ message: "No tasks found." }, { status: 404 });
     }
 
     // console.log("Tasks fetched:", tasks);
